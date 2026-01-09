@@ -87,12 +87,19 @@ export function betterAuthRouter(
   // get config to render sign in page
   router.get("/auth/config", (_req, res) => {
     const config = processProvidersResponse(authConfig.providers);
+    const hasCustomPlugins = authConfig.plugins && authConfig.plugins.length > 0;
+
+    // When custom plugins are provided, the built-in Google provider is disabled
+    // (see getBetterAuthInstance). Remove it from config to avoid showing a
+    // non-functional Google button in the sign-in UI.
+    if (hasCustomPlugins && config.providers.google) {
+      delete config.providers.google;
+    }
 
     // Check if any provider is configured (built-in or custom plugins)
     const hasBuiltInProviders =
       config.providers.emailAndPassword?.enabled ||
       config.providers.google?.enabled;
-    const hasCustomPlugins = authConfig.plugins && authConfig.plugins.length > 0;
 
     if (!hasBuiltInProviders && !hasCustomPlugins) {
       res.status(500).json({ error: "No providers configured" });
