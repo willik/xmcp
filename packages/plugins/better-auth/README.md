@@ -89,6 +89,7 @@ This config object is used to configure the Better Auth instance through the pro
 | `providers.google.clientId`     | `string`               | Google OAuth client ID from Google Cloud Console                                                       | Required if using Google |
 | `providers.google.clientSecret` | `string`               | Google OAuth client secret from Google Cloud Console                                                   | Required if using Google |
 | `plugins`                       | `BetterAuthPlugin[]`   | Custom Better Auth plugins (e.g., genericOAuth). See [Custom OAuth Providers](#custom-oauth-providers-advanced) | No                       |
+| `oauthProviders`                | `Array<"google">`      | OAuth providers configured via custom plugins. Tells the UI which buttons to show. | No                       |
 
 #### Email and Password
 
@@ -183,6 +184,8 @@ export default betterAuthProvider({
   secret: process.env.BETTER_AUTH_SECRET || "super-secret-key",
   // Pass your custom plugin - the MCP plugin is always included automatically
   plugins: [googleOAuth],
+  // Tell the sign-in UI to show the Google button
+  oauthProviders: ["google"],
 });
 ```
 

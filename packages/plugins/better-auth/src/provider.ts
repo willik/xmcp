@@ -96,6 +96,12 @@ export function betterAuthRouter(
       delete config.providers.google;
     }
 
+    // If oauthProviders specifies 'google', enable the Google button in the UI
+    // (the custom plugin handles the actual OAuth flow)
+    if (authConfig.oauthProviders?.includes("google")) {
+      config.providers.google = { enabled: true };
+    }
+
     // Check if any provider is configured (built-in or custom plugins)
     const hasBuiltInProviders =
       config.providers.emailAndPassword?.enabled ||

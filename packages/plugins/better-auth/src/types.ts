@@ -118,6 +118,9 @@ export type BetterAuthConfig = {
    *
    * The MCP plugin is always included automatically.
    *
+   * When using genericOAuth for providers like Google, also set `oauthProviders`
+   * to tell the sign-in UI which buttons to display.
+   *
    * @example
    * ```typescript
    * import { genericOAuth } from 'better-auth/plugins/generic-oauth';
@@ -141,8 +144,22 @@ export type BetterAuthConfig = {
    *   baseURL: '...',
    *   secret: '...',
    *   plugins: [googleOAuth],
+   *   oauthProviders: ['google'], // Tell UI to show Google button
    * });
    * ```
    */
   plugins?: BetterAuthPlugin[];
+  /**
+   * OAuth provider IDs that are configured via custom plugins.
+   *
+   * This tells the sign-in UI which OAuth buttons to display when using
+   * custom plugins (like genericOAuth). Currently supported: 'google'.
+   *
+   * @example
+   * ```typescript
+   * // When using genericOAuth with providerId: 'google'
+   * oauthProviders: ['google']
+   * ```
+   */
+  oauthProviders?: Array<"google">;
 };
